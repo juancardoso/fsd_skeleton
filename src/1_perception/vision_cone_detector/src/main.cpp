@@ -20,6 +20,7 @@
 #include <ros/ros.h>
 #include "cone_detector_handle.hpp"
 #include <sensor_msgs/Image.h>
+#include <image_transport/image_transport.h>
 
 
 typedef ns_cone_detector::ConeDetectorHandle ConeDetectorHandle;
@@ -39,8 +40,9 @@ int main(int argc, char **argv) {
 	ros::NodeHandle nodeHandle("~");
 
 	ConeDetectorHandle myConeDetectorHandle(nodeHandle);
-	ros::Subscriber camLeft = nodeHandle.subscribe("/zed/left/image_raw", 100, camLeftHandler);
-	ros::Subscriber camRight = nodeHandle.subscribe("/zed/right/image_raw", 100, camRightHandler);
+	image_transport::ImageTransport it(nodeHandle);
+	image_transport::Subscriber camLeft = it.subscribe("/zed/left/image_raw", 5, camLeftHandler);
+	image_transport::Subscriber camRight = it.subscribe("/zed/right/image_raw", 5, camRightHandler);
 	ros::Rate loop_rate(myConeDetectorHandle.getNodeRate());
 	while (ros::ok()) {
 
