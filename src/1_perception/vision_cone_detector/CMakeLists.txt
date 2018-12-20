@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   fsd_common_msgs
   sensor_msgs
+  image_transport
   )
 
 catkin_package(
