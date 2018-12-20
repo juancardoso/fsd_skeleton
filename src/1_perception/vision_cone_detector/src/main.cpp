@@ -19,21 +19,36 @@
 
 #include <ros/ros.h>
 #include "cone_detector_handle.hpp"
+#include <sensor_msgs/Image.h>
+
 
 typedef ns_cone_detector::ConeDetectorHandle ConeDetectorHandle;
 
+void camLeftHandler(const sensor_msgs::Image::ConstPtr& image)
+{
+	ROS_DEBUG("Height:%d Width:%d", image->height, image->width);
+}
+
+void camRightHandler(const sensor_msgs::Image::ConstPtr& image)
+{
+	ROS_DEBUG("Height:%d Width:%d", image->height, image->width);
+}
+
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "cone_detector");
-  ros::NodeHandle nodeHandle("~");
-  ConeDetectorHandle myConeDetectorHandle(nodeHandle);
-  ros::Rate loop_rate(myConeDetectorHandle.getNodeRate());
-  while (ros::ok()) {
+	ros::init(argc, argv, "cone_detector");
+	ros::NodeHandle nodeHandle("~");
 
-    myConeDetectorHandle.run();
+	ConeDetectorHandle myConeDetectorHandle(nodeHandle);
+	ros::Subscriber camLeft = nodeHandle.subscribe("/zed/left/image_raw", 100, camLeftHandler);
+	ros::Subscriber camRight = nodeHandle.subscribe("/zed/right/image_raw", 100, camRightHandler);
+	ros::Rate loop_rate(myConeDetectorHandle.getNodeRate());
+	while (ros::ok()) {
 
-    ros::spinOnce();                // Keeps node alive basically
-    loop_rate.sleep();              // Sleep for loop_rate
-  }
-  return 0;
+		myConeDetectorHandle.run();
+
+		ros::spinOnce();                // Keeps node alive basically
+		loop_rate.sleep();              // Sleep for loop_rate
+	}
+	return 0;
 }
 
