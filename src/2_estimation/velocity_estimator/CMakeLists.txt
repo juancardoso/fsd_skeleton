@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   fsd_common_msgs
+  nav_msgs
   )
 
 catkin_package(
@@ -34,6 +35,7 @@ add_executable(${PROJECT_NAME}
   src/velocity_estimator.cpp
   src/main.cpp
   )
+
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   )

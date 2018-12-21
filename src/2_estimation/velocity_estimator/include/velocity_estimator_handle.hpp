@@ -22,6 +22,7 @@
 
 #include "fsd_common_msgs/CarStateDt.h"
 #include "velocity_estimator.hpp"
+// #include <nav_msgs/Odometry.h>
 
 namespace ns_velocity_estimation {
 
@@ -40,11 +41,16 @@ class VelocityEstimatorHandle {
   void publishToTopics();
   void run();
   void sendVelocityEstimate();
+  void GroundTruthCallback(const fsd_common_msgs::CarStateDt msg);
+  //void GroundTruthCallback(const nav_msgs::Odometry::ConstPtr& msg);
+  
+
 //  void sendVisualization();
 
  private:
   ros::NodeHandle nodeHandle_;
   ros::Publisher velocityEstimationPublisher;
+  ros::Subscriber groundTruthSubscriber;
 
   std::string velocity_estimation_topic_name_;
   int node_rate_;
