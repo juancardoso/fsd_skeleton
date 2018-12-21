@@ -44,9 +44,16 @@ void VelocityEstimatorHandle::loadParameters() {
   
   if (!nodeHandle_.param<std::string>("velocity_estimation_topic_name",
                                       velocity_estimation_topic_name_,
-                                      "ground_truth_republisher")) {
+                                      "/estimation/velocity_estimation/velocity_estimate")) {
     ROS_WARN_STREAM("Did not load velocity_estimation_topic_name. Standard value is: " << velocity_estimation_topic_name_);
   }
+
+  if (!nodeHandle_.param<std::string>("ground_truth_republisher",
+                                      ground_truth_name_,
+                                      "/ground_truth_republisher")) {
+    ROS_WARN_STREAM("Did not load ground_truth_republisher. Standard value is: " << ground_truth_name_);
+  }
+
   if (!nodeHandle_.param("node_rate", node_rate_, 1)) {
     ROS_WARN_STREAM("Did not load node_rate. Standard value is: " << node_rate_);
   }
@@ -59,7 +66,7 @@ void VelocityEstimatorHandle::publishToTopics() {
 
 void VelocityEstimatorHandle::subscribeToTopics() {
   ROS_INFO("subscribe to topics");
-  groundTruthSubscriber = nodeHandle_.subscribe(velocity_estimation_topic_name_, 1, &VelocityEstimatorHandle::GroundTruthCallback,this);
+  groundTruthSubscriber = nodeHandle_.subscribe(ground_truth_name_, 1, &VelocityEstimatorHandle::GroundTruthCallback,this);
 }
 
 void VelocityEstimatorHandle::run() {

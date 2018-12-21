@@ -53,6 +53,7 @@ class VelocityEstimatorHandle {
   ros::Subscriber groundTruthSubscriber;
 
   std::string velocity_estimation_topic_name_;
+  std::string ground_truth_name_;
   int node_rate_;
 
   VelocityEstimator velocityEstimator_;
