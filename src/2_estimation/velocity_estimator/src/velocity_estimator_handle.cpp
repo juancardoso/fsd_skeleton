@@ -29,7 +29,6 @@ VelocityEstimatorHandle::VelocityEstimatorHandle(ros::NodeHandle &nodeHandle) :
   ROS_INFO("Constructing Handle");
   loadParameters();
   publishToTopics();
-  // subscribeToTopics();
 }
 
 // Getters
@@ -38,13 +37,11 @@ int VelocityEstimatorHandle::getNodeRate() const { return node_rate_; }
 // Methods
 void VelocityEstimatorHandle::loadParameters() {
   ROS_INFO("loading handle parameters");
-  
   if (!nodeHandle_.param<std::string>("velocity_estimation_topic_name",
                                       velocity_estimation_topic_name_,
                                       "/estimation/velocity_estimation/velocity_estimate")) {
     ROS_WARN_STREAM("Did not load velocity_estimation_topic_name. Standard value is: " << velocity_estimation_topic_name_);
   }
-
   if (!nodeHandle_.param("node_rate", node_rate_, 1)) {
     ROS_WARN_STREAM("Did not load node_rate. Standard value is: " << node_rate_);
   }

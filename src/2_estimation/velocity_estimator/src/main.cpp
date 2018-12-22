@@ -38,6 +38,7 @@ int main(int argc, char **argv) {
   while (ros::ok()) {
 
     myVelocityEstimatorHandle.run();
+    
     ros::spinOnce();                // Keeps node alive basically
     loop_rate.sleep();              // Sleep for loop_rate
   }
