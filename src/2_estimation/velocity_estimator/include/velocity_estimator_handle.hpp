@@ -22,7 +22,6 @@
 
 #include "fsd_common_msgs/CarStateDt.h"
 #include "velocity_estimator.hpp"
-// #include <nav_msgs/Odometry.h>
 
 namespace ns_velocity_estimation {
 
@@ -37,13 +36,9 @@ class VelocityEstimatorHandle {
 
   // Methods
   void loadParameters();
-  void subscribeToTopics();
   void publishToTopics();
   void run();
   void sendVelocityEstimate();
-  void GroundTruthCallback(const fsd_common_msgs::CarStateDt msg);
-  //void GroundTruthCallback(const nav_msgs::Odometry::ConstPtr& msg);
-  
 
 //  void sendVisualization();
 
