@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   fsd_common_msgs
+  nav_msgs
   )
 
 catkin_package(

@@ -19,13 +19,21 @@
 
 #include <ros/ros.h>
 #include "cone_detector_handle.hpp"
+#include <sensor_msgs/PointCloud2.h>
 
 typedef ns_cone_detector::ConeDetectorHandle ConeDetectorHandle;
 
+
+void velodynePointsHandler(const sensor_msgs::PointCloud2::ConstPtr& pointCloud )
+{
+  	ROS_INFO("Receiving infos from velodyne_points: Height:%d Width:%d", pointCloud->height, pointCloud->width); 
+}
+
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "cone_detector");
+ ros::init(argc, argv, "cone_detector");
   ros::NodeHandle nodeHandle("~");
   ConeDetectorHandle myConeDetectorHandle(nodeHandle);
+  ros::Subscriber lidar = nodeHandle.subscribe("/velodyne_points",100,velodynePointsHandler);
   ros::Rate loop_rate(myConeDetectorHandle.getNodeRate());
   while (ros::ok()) {
 

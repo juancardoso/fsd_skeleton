@@ -19,13 +19,19 @@
 
 #include <ros/ros.h>
 #include "velocity_estimator_handle.hpp"
+#include <nav_msgs/Odometry.h>
 
 typedef ns_velocity_estimation::VelocityEstimatorHandle VelocityEstimatorHandle;
+
+void GroundTruthCallback(const nav_msgs::Odometry::ConstPtr& msg){
+  ROS_INFO("Ground Connected");
+}
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "velocity_estimation");
   ros::NodeHandle nodeHandle("~");
   VelocityEstimatorHandle myVelocityEstimatorHandle(nodeHandle);
+  ros::Subscriber ground = nodeHandle.subscribe("/ground_truth/state", 1, GroundTruthCallback);
   ros::Rate loop_rate(myVelocityEstimatorHandle.getNodeRate());
   while (ros::ok()) {
 
